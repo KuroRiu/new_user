@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create User</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 420px;
+    }
+
+    .container {
+      background: white;
+      padding: 2rem 3rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 90%;
+      max-width: 500px;
+    }
+
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #EB5B00;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #FFB200;
+      transition: all .3s ease;
+      transform: scale(1.1);
+    }
+
+    .output {
+      margin-top: 1.5rem;
+      font-size: 1.1rem;
+      color: #333;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Create New User</h1>
+  <button onclick="createUser()">Create User</button>
+  <div class="output" id="output"></div>
+</div>
+
+<script>
+  const outputDiv = document.getElementById('output');
+
+  function createNewUser() {
+      let firstName = prompt("Enter your first name:")?.trim();
+      let lastName = prompt("Enter your last name:")?.trim();
+
+      // Проверим на пустые значения
+      if (!firstName || !lastName) {
+          alert("Name and surname cannot be empty.");
+          return null;
+      }
+
+      const newUser = {
+          getLogin() {
+              return (this.firstName[0] + this.lastName).toLowerCase();
+          },
+          get firstName() {
+              return _firstName;
+          },
+          get lastName() {
+              return _lastName;
+          },
+          setFirstName(newFirstName) {
+              if (typeof newFirstName === 'string' && newFirstName.trim() !== '') {
+                  _firstName = newFirstName.trim();
+              }
+          },
+          setLastName(newLastName) {
+              if (typeof newLastName === 'string' && newLastName.trim() !== '') {
+                  _lastName = newLastName.trim();
+              }
+          }
+      };
+
+      // Приватные переменные через замыкание
+      let _firstName = firstName;
+      let _lastName = lastName;
+
+      return newUser;
+  }
+
+  function createUser() {
+      const user = createNewUser();
+      if (user) {
+          const login = user.getLogin();
+          outputDiv.innerHTML = `<strong>Generated login:</strong> ${login}`;
+          console.log("User object:", user);
+      }
+  }
+</script>
+</body>
+</html>
